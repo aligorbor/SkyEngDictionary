@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SkyEngDictionary</string>
+    <string name="search_text">Найти перевод слова</string>
+    <string name="text_helper_text">Введите слово</string>
 </resources>
