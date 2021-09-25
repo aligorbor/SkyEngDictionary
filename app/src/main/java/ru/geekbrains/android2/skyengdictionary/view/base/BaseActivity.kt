@@ -8,8 +8,9 @@ import ru.geekbrains.android2.skyengdictionary.data.AppState
 import ru.geekbrains.android2.skyengdictionary.utils.AlertDialogFragment
 import ru.geekbrains.android2.skyengdictionary.utils.isOnline
 import ru.geekbrains.android2.skyengdictionary.viewmodel.BaseViewModel
+import ru.geekbrains.android2.skyengdictionary.viewmodel.Interactor
 
-abstract class BaseActivity<T : AppState> : AppCompatActivity() {
+abstract class BaseActivity<T : AppState, I : Interactor<T>> : AppCompatActivity() {
 
     abstract val model: BaseViewModel<T>
     protected var isNetworkAvailable: Boolean = false

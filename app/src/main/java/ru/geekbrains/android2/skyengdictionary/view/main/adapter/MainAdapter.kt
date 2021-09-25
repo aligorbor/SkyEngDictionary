@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.android2.skyengdictionary.R
 import ru.geekbrains.android2.skyengdictionary.data.word.Word
+import ru.geekbrains.android2.skyengdictionary.utils.convertMeaningsToString
 
 class MainAdapter(
     private var onListItemClickListener: OnListItemClickListener,
@@ -28,7 +29,7 @@ class MainAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, position: Int) {
-        holder.bind(data.get(position))
+        holder.bind(data[position])
     }
 
     override fun getItemCount(): Int {
@@ -41,7 +42,7 @@ class MainAdapter(
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.findViewById<TextView>(R.id.header_textview_recycler_item).text = data.text
                 itemView.findViewById<TextView>(R.id.description_textview_recycler_item).text =
-                    data.meanings?.get(0)?.translation?.text
+                    convertMeaningsToString(data.meanings)
                 itemView.setOnClickListener { openInNewWindow(data) }
             }
         }
