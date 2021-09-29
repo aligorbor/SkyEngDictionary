@@ -10,7 +10,7 @@
     <string name="button_search">Search</string>
     <string name="search_hint">New word</string>
     <string name="delete_description">X</string>
-
+    <string name="image_stub">image</string>
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_title_stub">Undefined error</string>
     <string name="dialog_title_device_is_offline">No internet connection</string>
@@ -19,4 +19,6 @@
     </string>
     <string name="dialog_tittle_sorry">Sorry</string>
     <string name="description">description</string>
+    <string name="menu_title_history">History</string>
+    <string name="search_in_database">Search in database</string>
 </resources>

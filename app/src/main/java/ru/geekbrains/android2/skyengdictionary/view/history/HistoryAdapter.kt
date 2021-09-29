@@ -1,4 +1,4 @@
-package ru.geekbrains.android2.skyengdictionary.view.main.adapter
+package ru.geekbrains.android2.skyengdictionary.view.history
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.android2.skyengdictionary.R
 import ru.geekbrains.android2.skyengdictionary.data.word.Word
-import ru.geekbrains.android2.skyengdictionary.utils.convertMeaningsToString
+import ru.geekbrains.android2.skyengdictionary.view.main.adapter.MainAdapter
 
-class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
-    RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
+class HistoryAdapter(private var onListItemClickListener: MainAdapter.OnListItemClickListener) :
+    RecyclerView.Adapter<HistoryAdapter.RecyclerItemViewHolder>() {
 
     private var data: List<Word> = arrayListOf()
 
@@ -22,7 +22,7 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener) 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerItemViewHolder {
         return RecyclerItemViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.activity_main_recyclerview_item, parent, false) as View
+                .inflate(R.layout.activity_history_recyclerview_item, parent, false) as View
         )
     }
 
@@ -38,9 +38,8 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener) 
 
         fun bind(data: Word) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
-                itemView.findViewById<TextView>(R.id.header_textview_recycler_item).text = data.text
-                itemView.findViewById<TextView>(R.id.description_textview_recycler_item).text =
-                    convertMeaningsToString(data.meanings)
+                itemView.findViewById<TextView>(R.id.header_history_textview_recycler_item).text =
+                    data.text
                 itemView.setOnClickListener { openInNewWindow(data) }
             }
         }
