@@ -6,16 +6,16 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.geekbrains.android2.core.BaseActivity
+import ru.geekbrains.android2.descriptionscreen.DescriptionActivity
+import ru.geekbrains.android2.historyscreen.view.history.HistoryActivity
+import ru.geekbrains.android2.model.data.AppState
+import ru.geekbrains.android2.model.data.Word
 import ru.geekbrains.android2.skyengdictionary.R
-import ru.geekbrains.android2.skyengdictionary.data.AppState
-import ru.geekbrains.android2.skyengdictionary.data.word.Word
 import ru.geekbrains.android2.skyengdictionary.databinding.ActivityMainBinding
 import ru.geekbrains.android2.skyengdictionary.utils.convertMeaningsToString
-import ru.geekbrains.android2.skyengdictionary.utils.isOnline
-import ru.geekbrains.android2.skyengdictionary.view.base.BaseActivity
-import ru.geekbrains.android2.skyengdictionary.view.description.DescriptionActivity
-import ru.geekbrains.android2.skyengdictionary.view.history.HistoryActivity
 import ru.geekbrains.android2.skyengdictionary.view.main.adapter.MainAdapter
+import ru.geekbrains.android2.utils.isOnline
 
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
@@ -60,9 +60,9 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         startActivity(
             DescriptionActivity.getIntent(
                 this@MainActivity,
-                data.text!!,
+                data.text,
                 convertMeaningsToString(data.meanings!!),
-                data.meanings[0].imageUrl
+                data.meanings!![0].imageUrl
             )
         )
     }

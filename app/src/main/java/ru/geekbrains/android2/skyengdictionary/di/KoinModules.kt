@@ -3,16 +3,11 @@ package ru.geekbrains.android2.skyengdictionary.di
 
 import androidx.room.Room
 import org.koin.dsl.module
-import ru.geekbrains.android2.skyengdictionary.data.datasource.RetrofitImplementation
-import ru.geekbrains.android2.skyengdictionary.data.datasource.RoomDataBaseImplementation
-import ru.geekbrains.android2.skyengdictionary.data.repository.Repository
-import ru.geekbrains.android2.skyengdictionary.data.repository.RepositoryImplementation
-import ru.geekbrains.android2.skyengdictionary.data.repository.RepositoryImplementationLocal
-import ru.geekbrains.android2.skyengdictionary.data.repository.RepositoryLocal
-import ru.geekbrains.android2.skyengdictionary.data.room.HistoryDataBase
-import ru.geekbrains.android2.skyengdictionary.data.word.Word
-import ru.geekbrains.android2.skyengdictionary.view.history.HistoryInteractor
-import ru.geekbrains.android2.skyengdictionary.view.history.HistoryViewModel
+import ru.geekbrains.android2.historyscreen.view.history.HistoryInteractor
+import ru.geekbrains.android2.historyscreen.view.history.HistoryViewModel
+import ru.geekbrains.android2.model.data.Word
+import ru.geekbrains.android2.repository.*
+import ru.geekbrains.android2.repository.room.HistoryDataBase
 import ru.geekbrains.android2.skyengdictionary.view.main.MainInteractor
 import ru.geekbrains.android2.skyengdictionary.view.main.MainViewModel
 

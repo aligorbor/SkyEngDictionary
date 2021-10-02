@@ -1,0 +1,20 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+
+dependencies {
+    implementation Design.appcompat
+
+    //Kotlin
+    implementation Kotlin.core
+    implementation Kotlin.stdlib
+
+    //Test
+    testImplementation TestImpl.junit
+    androidTestImplementation TestImpl.junit_ext
+    androidTestImplementation TestImpl.espresso
+}
+
+repositories {
+    mavenCentral()
+}

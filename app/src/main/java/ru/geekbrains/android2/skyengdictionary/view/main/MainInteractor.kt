@@ -1,10 +1,10 @@
 package ru.geekbrains.android2.skyengdictionary.view.main
 
-import ru.geekbrains.android2.skyengdictionary.data.AppState
-import ru.geekbrains.android2.skyengdictionary.data.repository.Repository
-import ru.geekbrains.android2.skyengdictionary.data.repository.RepositoryLocal
-import ru.geekbrains.android2.skyengdictionary.data.word.Word
-import ru.geekbrains.android2.skyengdictionary.viewmodel.Interactor
+import ru.geekbrains.android2.core.viewmodel.Interactor
+import ru.geekbrains.android2.model.data.AppState
+import ru.geekbrains.android2.model.data.Word
+import ru.geekbrains.android2.repository.Repository
+import ru.geekbrains.android2.repository.RepositoryLocal
 
 class MainInteractor(
     private val repositoryRemote: Repository<List<Word>>,

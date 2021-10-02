@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ru.geekbrains.android2.model.data.Word
 import ru.geekbrains.android2.skyengdictionary.R
-import ru.geekbrains.android2.skyengdictionary.data.word.Word
 import ru.geekbrains.android2.skyengdictionary.utils.convertMeaningsToString
 
 class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
