@@ -1,2 +1,8 @@
 rootProject.name = "SkyEngDictionary"
 include ':app'
+include ':core'
+include ':model'
+include ':repository'
+include ':utils'
+include ':historyscreen'
+include ':descriptionscreen'
