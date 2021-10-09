@@ -2,12 +2,16 @@ package ru.geekbrains.android2.skyengdictionary.di
 
 
 import androidx.room.Room
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import ru.geekbrains.android2.historyscreen.view.history.HistoryActivity
 import ru.geekbrains.android2.historyscreen.view.history.HistoryInteractor
 import ru.geekbrains.android2.historyscreen.view.history.HistoryViewModel
-import ru.geekbrains.android2.model.data.Word
+import ru.geekbrains.android2.model.data.DTO.WordDTO
 import ru.geekbrains.android2.repository.*
 import ru.geekbrains.android2.repository.room.HistoryDataBase
+import ru.geekbrains.android2.skyengdictionary.view.main.MainActivity
 import ru.geekbrains.android2.skyengdictionary.view.main.MainInteractor
 import ru.geekbrains.android2.skyengdictionary.view.main.MainViewModel
 
@@ -18,8 +22,8 @@ val application = module {
             .build()
     }
     single { get<HistoryDataBase>().historyDao() }
-    single<Repository<List<Word>>> { RepositoryImplementation(RetrofitImplementation()) }
-    single<RepositoryLocal<List<Word>>> {
+    single<Repository<List<WordDTO>>> { RepositoryImplementation(RetrofitImplementation()) }
+    single<RepositoryLocal<List<WordDTO>>> {
         RepositoryImplementationLocal(
             RoomDataBaseImplementation(
                 get()
@@ -29,11 +33,17 @@ val application = module {
 }
 
 val mainScreen = module {
-    factory { MainViewModel(get()) }
-    factory { MainInteractor(get(), get()) }
+    scope(named<MainActivity>()) {
+        scoped { MainInteractor(get(), get()) }
+        viewModel { MainViewModel(get()) }
+    }
+
 }
 
 val historyScreen = module {
-    factory { HistoryViewModel(get()) }
-    factory { HistoryInteractor(get(), get()) }
+    scope(named<HistoryActivity>()) {
+        scoped { HistoryInteractor(get(), get()) }
+        viewModel { HistoryViewModel(get()) }
+    }
+
 }

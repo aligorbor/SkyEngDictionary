@@ -1,12 +1,13 @@
 package ru.geekbrains.android2.repository
 
 import ru.geekbrains.android2.model.data.AppState
-import ru.geekbrains.android2.model.data.Word
+import ru.geekbrains.android2.model.data.DTO.WordDTO
 import ru.geekbrains.android2.repository.room.HistoryDao
 
-class RoomDataBaseImplementation(private val historyDao: HistoryDao) : DataSourceLocal<List<Word>> {
+class RoomDataBaseImplementation(private val historyDao: HistoryDao) :
+    DataSourceLocal<List<WordDTO>> {
 
-    override suspend fun getData(word: String): List<Word> {
+    override suspend fun getData(word: String): List<WordDTO> {
         return mapHistoryEntityToSearchResult(historyDao.getDataByWord(word))
     }
 
@@ -16,7 +17,7 @@ class RoomDataBaseImplementation(private val historyDao: HistoryDao) : DataSourc
         }
     }
 
-    override suspend fun getAllData(): List<Word> {
+    override suspend fun getAllData(): List<WordDTO> {
         return mapHistoryEntityToSearchResult(historyDao.all())
     }
 }

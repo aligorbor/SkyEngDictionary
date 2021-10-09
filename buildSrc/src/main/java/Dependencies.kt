@@ -71,8 +71,10 @@ object Design {
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
     const val multidex = "com.android.support:multidex:${Versions.multidex}"
     const val material = "com.google.android.material:material:${Versions.material}"
-    const val constraintlayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintlayout}"
-    const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swiperefreshlayout}"
+    const val constraintlayout =
+        "androidx.constraintlayout:constraintlayout:${Versions.constraintlayout}"
+    const val swiperefreshlayout =
+        "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swiperefreshlayout}"
 }
 
 object Kotlin {

@@ -1,12 +1,12 @@
 package ru.geekbrains.android2.repository
 
 import ru.geekbrains.android2.model.data.AppState
-import ru.geekbrains.android2.model.data.Word
+import ru.geekbrains.android2.model.data.DTO.WordDTO
 
-class RepositoryImplementationLocal(private val dataSource: DataSourceLocal<List<Word>>) :
-    RepositoryLocal<List<Word>> {
+class RepositoryImplementationLocal(private val dataSource: DataSourceLocal<List<WordDTO>>) :
+    RepositoryLocal<List<WordDTO>> {
 
-    override suspend fun getData(word: String): List<Word> {
+    override suspend fun getData(word: String): List<WordDTO> {
         return dataSource.getData(word)
     }
 
@@ -14,7 +14,7 @@ class RepositoryImplementationLocal(private val dataSource: DataSourceLocal<List
         dataSource.saveToDB(appState)
     }
 
-    override suspend fun getAllData(): List<Word> {
+    override suspend fun getAllData(): List<WordDTO> {
         return dataSource.getAllData()
     }
 }

@@ -7,6 +7,7 @@ dependencies {
     implementation project(Modules.repository)
     implementation project(Modules.core)
     implementation project(Modules.descriptionscreen)
+    implementation project(Modules.utils)
 
     //Design
     implementation Design.appcompat

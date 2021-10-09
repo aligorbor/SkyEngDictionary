@@ -6,13 +6,13 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.geekbrains.android2.model.data.Word
+import ru.geekbrains.android2.model.data.DTO.WordDTO
 import ru.geekbrains.android2.repository.api.ApiService
 import ru.geekbrains.android2.repository.api.BaseInterceptor
 
-class RetrofitImplementation : DataSource<List<Word>> {
+class RetrofitImplementation : DataSource<List<WordDTO>> {
 
-    override suspend fun getData(word: String): List<Word> {
+    override suspend fun getData(word: String): List<WordDTO> {
         return getService(BaseInterceptor.interceptor).searchAsync(word).await()
     }
 

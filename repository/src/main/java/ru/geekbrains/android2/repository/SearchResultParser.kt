@@ -1,24 +1,25 @@
 package ru.geekbrains.android2.repository
 
 import ru.geekbrains.android2.model.data.AppState
+import ru.geekbrains.android2.model.data.DTO.MeaningDTO
+import ru.geekbrains.android2.model.data.DTO.TranslationDTO
+import ru.geekbrains.android2.model.data.DTO.WordDTO
 import ru.geekbrains.android2.model.data.Meaning
-import ru.geekbrains.android2.model.data.Translation
-import ru.geekbrains.android2.model.data.Word
 import ru.geekbrains.android2.repository.room.HistoryEntity
 
 
-fun mapHistoryEntityToSearchResult(list: List<HistoryEntity>): List<Word> {
-    val searchResult = ArrayList<Word>()
+fun mapHistoryEntityToSearchResult(list: List<HistoryEntity>): List<WordDTO> {
+    val searchResult = ArrayList<WordDTO>()
     if (!list.isNullOrEmpty()) {
         for (entity in list) {
             searchResult.add(
-                Word(
+                WordDTO(
                     0,
                     entity.word,
                     arrayListOf(
-                        Meaning(
+                        MeaningDTO(
                             0, "",
-                            Translation(entity.description ?: "", ""),
+                            TranslationDTO(entity.description ?: "", ""),
                             entity.imageUrl ?: ""
                         )
                     )
@@ -34,7 +35,7 @@ fun convertDataModelSuccessToEntity(appState: AppState): HistoryEntity? {
         is AppState.Success -> {
             val searchResult = appState.data
             if (searchResult.isNullOrEmpty()
-                || searchResult[0].text.isNullOrEmpty()
+                || searchResult[0].text.isEmpty()
                 || searchResult[0].meanings.isNullOrEmpty()
             ) {
                 null
@@ -42,7 +43,7 @@ fun convertDataModelSuccessToEntity(appState: AppState): HistoryEntity? {
                 HistoryEntity(
                     searchResult[0].text,
                     convertMeaningsToString(searchResult[0].meanings),
-                    searchResult[0].meanings?.get(0)?.imageUrl
+                    searchResult[0].meanings.get(0).imageUrl
                 )
             }
         }
@@ -55,7 +56,7 @@ fun convertDataModelSuccessToEntities(appState: AppState): List<HistoryEntity>? 
         is AppState.Success -> {
             val searchResult = appState.data
             if (searchResult.isNullOrEmpty()
-                || searchResult[0].text.isNullOrEmpty()
+                || searchResult[0].text.isEmpty()
                 || searchResult[0].meanings.isNullOrEmpty()
             ) {
                 null
@@ -66,7 +67,7 @@ fun convertDataModelSuccessToEntities(appState: AppState): List<HistoryEntity>? 
                         HistoryEntity(
                             word.text,
                             convertMeaningsToString(word.meanings),
-                            word.meanings?.get(0)?.imageUrl
+                            word.meanings.get(0).imageUrl
                         )
                     )
                 }
@@ -82,9 +83,9 @@ fun convertMeaningsToString(meanings: List<Meaning>?): String {
     meanings?.let {
         for ((index, meaning) in meanings.withIndex()) {
             meaningsSeparatedByComma += if (index + 1 != meanings.size) {
-                String.format("%s%s", meaning.translation?.text, ", ")
+                String.format("%s%s", meaning.translation.text, ", ")
             } else {
-                meaning.translation?.text
+                meaning.translation.text
             }
         }
     }
