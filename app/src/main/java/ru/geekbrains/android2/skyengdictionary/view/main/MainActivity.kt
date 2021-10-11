@@ -1,10 +1,18 @@
 package ru.geekbrains.android2.skyengdictionary.view.main
 
+import android.animation.ObjectAnimator
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewTreeObserver
+import android.view.animation.AnticipateInterpolator
+import androidx.annotation.RequiresApi
+import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -23,6 +31,7 @@ import ru.geekbrains.android2.skyengdictionary.utils.convertMeaningsToString
 import ru.geekbrains.android2.skyengdictionary.view.main.adapter.MainAdapter
 import ru.geekbrains.android2.utils.OnlineLiveData
 import ru.geekbrains.android2.utils.viewById
+import java.util.concurrent.Executors
 
 class MainActivity : BaseActivity<AppState, MainInteractor>(), AndroidScopeComponent {
 
@@ -60,11 +69,89 @@ class MainActivity : BaseActivity<AppState, MainInteractor>(), AndroidScopeCompo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val splashScreen = installSplashScreen()
+            var condition = true
+            splashScreen.setKeepVisibleCondition { condition }
+            Executors.newSingleThreadExecutor().execute {
+                Thread.sleep(2000)
+                condition = false
+                splashScreen.setKeepVisibleCondition { condition }
+            }
+
+            splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
+                ObjectAnimator.ofFloat(
+                    splashScreenViewProvider.view,
+                    View.TRANSLATION_X,
+                    0f,
+                    splashScreenViewProvider.view.width.toFloat()
+                ).apply {
+                    duration = 1500
+                    doOnEnd {
+                        splashScreenViewProvider.remove()
+                    }
+                }.also {
+                    it.start()
+                }
+            }
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         subscribeToNetworkChange()
+
+        //     setDefaultSplashScreen()
         initViewModel()
         initViews()
+    }
+
+    private fun setDefaultSplashScreen() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            setSplashScreenHideAnimation()
+        }
+        setSplashScreenDuration()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    private fun setSplashScreenHideAnimation() {
+        splashScreen.setOnExitAnimationListener { splashScreenView ->
+            val slideLeft = ObjectAnimator.ofFloat(
+                splashScreenView,
+                View.TRANSLATION_X,
+                0f,
+                -splashScreenView.height.toFloat()
+            )
+            slideLeft.interpolator = AnticipateInterpolator()
+            slideLeft.duration = SLIDE_LEFT_DURATION
+
+            slideLeft.doOnEnd { splashScreenView.remove() }
+            slideLeft.start()
+        }
+    }
+
+    private fun setSplashScreenDuration() {
+        var isHideSplashScreen = false
+
+        object : CountDownTimer(COUNTDOWN_DURATION, COUNTDOWN_INTERVAL) {
+            override fun onTick(millisUntilFinished: Long) {}
+            override fun onFinish() {
+                isHideSplashScreen = true
+            }
+        }.start()
+
+        val content: View = findViewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if (isHideSplashScreen) {
+                        content.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else {
+                        false
+                    }
+                }
+            }
+        )
     }
 
     private fun showDescription(data: Word) {
@@ -119,7 +206,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>(), AndroidScopeCompo
         mainActivityRecyclerview.adapter = adapter
     }
 
-    fun subscribeToNetworkChange() {
+    private fun subscribeToNetworkChange() {
         snackBar = Snackbar.make(
             binding.root,
             R.string.dialog_message_device_is_offline,
@@ -140,6 +227,9 @@ class MainActivity : BaseActivity<AppState, MainInteractor>(), AndroidScopeCompo
     companion object {
         private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG =
             "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
+        private const val SLIDE_LEFT_DURATION = 1000L
+        private const val COUNTDOWN_DURATION = 2000L
+        private const val COUNTDOWN_INTERVAL = 1000L
     }
 
 }

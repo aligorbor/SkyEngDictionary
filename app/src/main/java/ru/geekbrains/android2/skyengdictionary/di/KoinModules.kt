@@ -17,7 +17,7 @@ import ru.geekbrains.android2.skyengdictionary.view.main.MainViewModel
 
 val application = module {
     single {
-        Room.databaseBuilder(get(), HistoryDataBase::class.java, "HistoryDB")
+        Room.databaseBuilder(get(), HistoryDataBase::class.java, HistoryDataBase.DB_NAME)
             .fallbackToDestructiveMigration()
             .build()
     }

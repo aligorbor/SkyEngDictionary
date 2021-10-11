@@ -2,9 +2,9 @@ import org.gradle.api.JavaVersion
 
 object Config {
     const val application_id = "ru.geekbrains.android2.skyengdictionary"
-    const val compile_sdk = 30
+    const val compile_sdk = 31
     const val min_sdk = 21
-    const val target_sdk = 30
+    const val target_sdk = 31
     val java_version = JavaVersion.VERSION_1_8
 }
 
@@ -32,6 +32,7 @@ object Versions {
     const val material = "1.4.0"
     const val constraintlayout = "2.1.0"
     const val swiperefreshlayout = "1.1.0"
+    const val splash = "1.0.0-alpha02"
 
     //Kotlin
     const val core = "1.6.0"
@@ -75,6 +76,7 @@ object Design {
         "androidx.constraintlayout:constraintlayout:${Versions.constraintlayout}"
     const val swiperefreshlayout =
         "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swiperefreshlayout}"
+    const val splash = "androidx.core:core-splashscreen:${Versions.splash}"
 }
 
 object Kotlin {

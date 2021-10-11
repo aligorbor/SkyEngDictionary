@@ -2,7 +2,10 @@ package ru.geekbrains.android2.descriptionscreen
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.RenderEffect
+import android.graphics.Shader
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
@@ -77,9 +80,9 @@ class DescriptionActivity : AppCompatActivity() {
         if (imageLink.isNullOrBlank()) {
             stopRefreshAnimationIfNeeded()
         } else {
-            usePicassoToLoadPhoto(binding.descriptionImageview, imageLink)
-            // useGlideToLoadPhoto(binding.descriptionImageview, imageLink)
-            // useCoilToLoadPhoto(binding.descriptionImageview, imageLink)
+            //  usePicassoToLoadPhoto(binding.descriptionImageview, imageLink)
+            //  useGlideToLoadPhoto(binding.descriptionImageview, imageLink)
+            useCoilToLoadPhoto(binding.descriptionImageview, imageLink)
         }
     }
 
@@ -139,6 +142,12 @@ class DescriptionActivity : AppCompatActivity() {
                 onStart = {},
                 onSuccess = { result ->
                     imageView.setImageDrawable(result)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        val blurEffect =
+                            RenderEffect.createBlurEffect(5f, 5f, Shader.TileMode.REPEAT)
+                        imageView.setRenderEffect(blurEffect)
+                        //  binding.root.setRenderEffect(blurEffect)
+                    }
                 },
                 onError = {
                     imageView.setImageResource(R.drawable.ic_load_error_vector)
